@@ -38,8 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
       Uri.parse('https://dummyjson.com/auth/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'username': _usernameController.text,
-        'password': _passwordController.text,
+        'username': _usernameController.text,  //emilys
+        'password': _passwordController.text,  //emilyspass
       }),
     );
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:login_test/screens/utils/theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +15,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
+
+
+
   @override
   void dispose() {
     _usernameController.dispose();
@@ -22,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login() {
+
     if (_formKey.currentState?.validate() ?? false) {
       // Perform login logic
       String username = _usernameController.text;
@@ -64,8 +69,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
+    final themeMode = ThemeMode.system;
+    final theme = TappTheme.lightTheme;
+    final darkTheme = TappTheme.darkTheme;
+    //final ThemeData theme = Theme.of(context);
     final TextStyle textStyle = theme.textTheme.bodyMedium!;
+    final Color primaryColor = theme.colorScheme.primary; // Adapt color for theme
     final List<Widget> aboutBoxChildren = <Widget>[
       const SizedBox(height: 24),
       RichText(
@@ -77,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     'natively compiled applications for mobile, web, and desktop '
                     'from a single codebase. Learn more about Flutter at '),
             TextSpan(
-                style: textStyle.copyWith(color: theme.colorScheme.primary),
+                style: textStyle.copyWith(color: primaryColor),
                 text: 'https://flutter.dev'),
             TextSpan(style: textStyle, text: '.'),
           ],
@@ -86,101 +95,105 @@ class _LoginScreenState extends State<LoginScreen> {
     ];
 
     return Scaffold(
-
-      // appBar: AppBar(
-      //     //title: Text('Login Page'),
-      //     ),
-      body: Center( child: SingleChildScrollView(
+      body: Center(
+        child: SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.network(
-                'https://plus.unsplash.com/premium_vector-1683141338125-daf778a0e85e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                // Replace with your image URL
-                height: 200,
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Phone number',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.network(
+                    'https://plus.unsplash.com/premium_vector-1683141338125-daf778a0e85e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                    height: 200,
                   ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your username';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                ),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: _login,
-                  child: Text('Login'),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor, // Adapted for theme
                     ),
                   ),
-                ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      labelText: 'Phone number',
+                      labelStyle: TextStyle(color: primaryColor),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your username';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: primaryColor),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: _login,
+                      child: const Text('Login'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor, // Adapted for theme
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'OR login with',
+                    style: TextStyle(color: theme.textTheme.bodyMedium?.color),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    child: const Text('Show About Example'),
+                    onPressed: () {
+                      showAboutDialog(
+                        context: context,
+                        applicationIcon: const FlutterLogo(),
+                        applicationName: 'Show About Example',
+                        applicationVersion: 'August 2019',
+                        applicationLegalese: '\u{a9} 2014 The Flutter Authors',
+                        children: aboutBoxChildren,
+                      );
+                    },
+                  ),
+                ],
               ),
-
-              SizedBox(height: 20),
-              Text('OR login with'),
-              SizedBox(height: 20),
-              SizedBox(height: 20),
-
-              ElevatedButton(
-                child: const Text('Show About Example'),
-                onPressed: () {
-                  showAboutDialog(
-                    context: context,
-                    applicationIcon: const FlutterLogo(),
-                    applicationName: 'Show About Example',
-                    applicationVersion: 'August 2019',
-                    applicationLegalese: '\u{a9} 2014 The Flutter Authors',
-                    children: aboutBoxChildren,
-                  );
-                },
-              )
-            ],
+            ),
           ),
         ),
-      ))),
+      ),
     );
   }
+
+
 }
