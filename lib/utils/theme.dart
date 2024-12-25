@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login_test/screens/utils/textTheme.dart';
+import 'package:login_test/utils/textTheme.dart';
 
 class TappTheme{
   TappTheme._();
